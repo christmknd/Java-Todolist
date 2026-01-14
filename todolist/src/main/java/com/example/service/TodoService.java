@@ -13,11 +13,13 @@ import com.example.model.repository.TodoRepository;;
 @Service
 public class TodoService {
 
-    @Autowired
-    private TodoRepository todoRepository;
+    private final TodoRepository todoRepository;
+    private final TodoMapper todoMapper;
 
-    @Autowired
-    private TodoMapper todoMapper;
+    public TodoService(TodoRepository todoRepository, TodoMapper todoMapper) {
+        this.todoRepository = todoRepository;
+        this.todoMapper = todoMapper;
+    }
 
     public TodoDto getTodoById(Long idTodo) {
 
@@ -42,8 +44,8 @@ public class TodoService {
         return todoMapper.toDto(savedTodo);
     }
 
-    public TodoDto updateTodo(TodoDto todoDto) {
-        Todo todo = todoRepository.findById(todoDto.getId()).orElse(null);
+    public TodoDto updateTodo(TodoDto todoDto, Long idTodo) {
+        Todo todo = todoRepository.findById(idTodo).orElse(null);
         if (todo == null) {
             return null;
         }
