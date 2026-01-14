@@ -7,6 +7,6 @@ import lombok.*;
 public class TodoDto {
 
     private Long id;
-    private String username;
-    private String password;
+    private String title;
+    private Boolean completed;
 }
