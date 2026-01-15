@@ -1,4 +1,4 @@
-package com.example.config.security;
+package com.example.config;
 
 import java.time.Instant;
 import java.util.Date;
