@@ -51,6 +51,24 @@ Ce projet est une API REST simple de gestion de tâches (Todo), développée ave
 
 ---
 
+## 🔐 Sécurité – Authentification JWT (kata minimal)
+
+L’application implémente une authentification stateless basée sur JWT (JSON Web Token) afin de sécuriser les endpoints.
+
+L’implémentation est volontairement minimaliste, dans le cadre d’un kata technique.
+
+### JwtUtils
+
+Crée et valide les tokens JWT.
+
+### JwtFilter
+
+Récupère le JWT dans la requête et authentifie l’utilisateur.
+
+### SecurityConfig
+
+Configure la sécurité et active l’authentification JWT.
+
 ## 🚀 Fonctionnalités (MVP)
 
 - Créer un todo
