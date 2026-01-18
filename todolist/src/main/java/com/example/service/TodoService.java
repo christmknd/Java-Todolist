@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import com.example.model.dto.TodoDto;
 import com.example.model.entity.*;
 import com.example.model.mapper.TodoMapper;
-import com.example.model.repository.TodoRepository;;
+import com.example.model.repository.TodoRepository;
+
+import jakarta.persistence.EntityNotFoundException;;
 
 @Service
 public class TodoService {
@@ -22,10 +24,8 @@ public class TodoService {
 
     public TodoDto getTodoById(Long idTodo) {
 
-        Todo todo = todoRepository.findById(idTodo).orElse(null);
-        if (todo == null) {
-            return null;
-        }
+        Todo todo = todoRepository.findById(idTodo)
+                .orElseThrow(() -> new EntityNotFoundException("Todo with id " + idTodo + " not found"));
         return todoMapper.toDto(todo);
     }
 
@@ -44,10 +44,8 @@ public class TodoService {
     }
 
     public TodoDto updateTodo(TodoDto todoDto, Long idTodo) {
-        Todo todo = todoRepository.findById(idTodo).orElse(null);
-        if (todo == null) {
-            return null;
-        }
+        Todo todo = todoRepository.findById(idTodo)
+                .orElseThrow(() -> new EntityNotFoundException("Todo with id " + idTodo + " not found"));
         todo.setTitle(todoDto.getTitle());
         todo.setCompleted(todoDto.getCompleted());
         Todo updatedTodo = todoRepository.save(todo);
@@ -55,6 +53,11 @@ public class TodoService {
     }
 
     public void deleteTodo(Long idTodo) {
+        if (!todoRepository.existsById(idTodo)) {
+            throw new EntityNotFoundException(
+                    "Todo with id " + idTodo + " not found");
+        }
+
         todoRepository.deleteById(idTodo);
     }
 }
